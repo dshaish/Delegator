@@ -1,4 +1,4 @@
-package com.delegator.engine;
+package org.delegator.engine;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

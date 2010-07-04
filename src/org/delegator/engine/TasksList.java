@@ -1,13 +1,9 @@
-package org.domain.delegator.session;
+package org.delegator.engine;
 
-import org.domain.delegator.entity.*;
-import org.jboss.seam.annotations.Name;
-import org.jboss.seam.framework.EntityQuery;
-import java.util.Arrays;
+import org.delegator.entities.Tasks;
 
-@Name("tasksList")
-public class TasksList extends EntityQuery<Tasks> {
-
+class TasksList {
+	
 	private static final String EJBQL = "select tasks from Tasks tasks";
 
 	private static final String[] RESTRICTIONS = {
@@ -19,12 +15,12 @@ public class TasksList extends EntityQuery<Tasks> {
 	private Tasks tasks = new Tasks();
 
 	public TasksList() {
-		setEjbql(EJBQL);
-		setRestrictionExpressionStrings(Arrays.asList(RESTRICTIONS));
-		setMaxResults(25);
 	}
 
 	public Tasks getTasks() {
 		return tasks;
 	}
+	
+	
+	
 }
