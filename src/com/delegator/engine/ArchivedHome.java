@@ -1,5 +1,3 @@
-package com.
-
 import org.domain.delegator.entity.*;
 import java.util.ArrayList;
 import java.util.List;

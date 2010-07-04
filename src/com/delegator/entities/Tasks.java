@@ -1,5 +1,3 @@
-package src.com.delegator.entities;
-
 // Generated 09:11:28 04/07/2010 by Hibernate Tools 3.3.0.GA
 
 import java.util.Date;
