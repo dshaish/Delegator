@@ -1,13 +1,14 @@
 Nubemet Task Delegation Application:
 
 Issues:
-1. Hibernate Objects created. the projext is set with maven and CXF.
-2. TESTING
+1. The projext is set with maven and CXF.
+2. There are 3 packages in the proejct:
+	1. Entities - the hibernate DB objects.
+	2. Engine - the objects performing the requests.
+	3. API - Object which create the API to the user client.
 
 Bugs:
-
-
-
+1.
 
 Messages:
-1. Hi David , this is the communications file between us.
+1.
