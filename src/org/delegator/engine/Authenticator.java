@@ -11,6 +11,12 @@ public class Authenticator {
 	@Resource
 	private WebServiceContext wsContext;
 	
+	/**
+	 * Authenticate the logging user with the system. 
+	 * @param userName The user name.
+	 * @param password The password.
+	 * @return true upon success , false else.
+	 */
 	public boolean authenticate(String userName , String password){
 		LoggedUserBean loggedUser = new LoggedUserBean();
 		MessageContext mc = wsContext. getMessageContext();

@@ -18,12 +18,10 @@ import org.delegator.entities.TasksC;
 import org.delegator.entities.WorksFor;
 import org.hibernate.Session;
 
-class TasksList {
+class TasksList{
 	@Resource
 	private WebServiceContext wsContext;
 	
-	List<NubemetTask> tasksList = new LinkedList<NubemetTask>();
-
 	public TasksList() {
 	}
 
@@ -39,7 +37,7 @@ class TasksList {
 		Session hybssn = HibernateUtils.getSessionFactory().getCurrentSession();
 		if (session == null || hybssn == null)
 			throw new WebServiceException("No session in WebServiceContext");
-		tasksList.clear();
+		List<NubemetTask> tasksList = new LinkedList<NubemetTask>();
 		// Run the query:
 		Iterator<?> results= hybssn.createQuery(UserTasksFilter.getFilter(filter))
 							.setParameter("userEid", session.getAttribute("userEid")).iterate();
@@ -133,5 +131,50 @@ class TasksList {
 		}
 		
 		return ret;	
+	}
+	
+	/**
+	 * Removes a task from the DB.
+	 * @param tid The task to remove id.
+	 * @return true upon success , false else.
+	 */
+	public boolean removeTask (int tid){
+		Session hybssn = HibernateUtils.getSessionFactory().getCurrentSession();
+		hybssn.beginTransaction();
+		
+		Tasks task2remove = (Tasks)hybssn.load(Tasks.class, tid);
+		hybssn.delete(task2remove);
+		
+		hybssn.getTransaction().commit();
+		return true;
+	}
+	
+	/**
+	 * Delegates a given task ID to the list of employees selected.
+	 * @param delegateTo List of employees.
+	 * @param tid The task ID to delegate.
+	 * @return true upon success , false else.
+	 */
+	public boolean delegateTask(List<Integer> delegateTo, int tid){
+		Session hybssn = HibernateUtils.getSessionFactory().getCurrentSession();
+		hybssn.beginTransaction();
+		
+		Tasks task2Delegate = (Tasks)hybssn.load(Tasks.class, tid);
+		for (Integer delg2: delegateTo){
+			DoneBy doneBy = new DoneBy();
+			Employee emp = (Employee)hybssn.load(Employee.class, delg2);
+			DoneById doneById = new DoneById();
+			
+			doneById.setEid(emp.getEid());
+			doneById.setTid(tid);
+			doneBy.setEmployee(emp);
+			doneBy.setTasks(task2Delegate);
+			doneBy.setId(doneById);
+			doneBy.setChanged((byte) 1);
+		}
+		
+		hybssn.getTransaction().commit();
+		
+		return true;
 	}
 }
