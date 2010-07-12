@@ -4,7 +4,6 @@
     	<wb-resource deploy-path="/" source-path="/src/main/webapp"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/Delegator-0.0.1-SNAPSHOT/WEB-INF"/>
         <property name="context-root" value="Delegator"/>
         <property name="java-output-path" value="/Nubemet/target/classes"/>
     </wb-module>
