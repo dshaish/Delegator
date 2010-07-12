@@ -13,6 +13,7 @@
           <string>WEB-INF/web.xml</string>
           <string>WEB-INF/classes/applicationContext.xml</string>
           <string>WEB-INF/classes/DB_Build.sql</string>
+          <string>WEB-INF/classes/hibernate.cfg.xml</string>
           <string>WEB-INF/classes/org/delegator/api/NubemetDelegatedTo.class</string>
           <string>WEB-INF/classes/org/delegator/api/NubemetTask.class</string>
           <string>WEB-INF/classes/org/delegator/api/NubemetWebService.class</string>
