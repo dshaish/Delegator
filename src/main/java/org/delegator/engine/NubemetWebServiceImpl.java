@@ -13,32 +13,32 @@ public class NubemetWebServiceImpl implements NubemetWebService {
 	TasksList tasksList = new TasksList();
 	
 	@Override
-	public boolean addTask(NubemetTask newNubemetTask) {
-		return tasksList.addTask(newNubemetTask);
+	public boolean addTask(NubemetTask newNubemetTask, int userEid) {
+		return tasksList.addTask(newNubemetTask, userEid);
 	}
 
 	@Override
-	public boolean delegateTask(List<Integer> delegateTo, int tid) {
-		return tasksList.delegateTask(delegateTo, tid);
+	public boolean delegateTask(List<Integer> delegateTo, int tid, int userEid) {
+		return tasksList.delegateTask(delegateTo, tid, userEid);
 	}
 
 	@Override
-	public List<NubemetTask> getTasks(UserTasksFilter filter) {
-		return tasksList.getTasks(filter);
+	public List<NubemetTask> getTasks(UserTasksFilter filter, int userEid) {
+		return tasksList.getTasks(filter, userEid);
 	}
 
 	@Override
-	public HashMap<Integer, String> getWorksForMe() {
-		return tasksList.getWorksForMe();
+	public HashMap<Integer, String> getWorksForMe(int userEid) {
+		return tasksList.getWorksForMe(userEid);
 	}
 
 	@Override
-	public boolean removeTask(int tid) {
-		return tasksList.removeTask(tid);
+	public boolean removeTask(int tid, int userEid) {
+		return tasksList.removeTask(tid, userEid);
 	}
 
 	@Override
-	public boolean authenticate(String userName, String password) {
+	public int authenticate(String userName, String password) {
 		Authenticator auth = new Authenticator();
 		return auth.authenticate(userName, password);
 	}

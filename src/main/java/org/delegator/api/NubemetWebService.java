@@ -14,7 +14,7 @@ public interface NubemetWebService {
 	 * @param filter filter type for the list extraction from the DB.
 	 * @return the list of tasks for the user.
 	 */
-	public List<NubemetTask> getTasks(UserTasksFilter filter);
+	public List<NubemetTask> getTasks(UserTasksFilter filter, int userEid);
 	
 	/**
 	 * Adds a new task to the user's list.
@@ -22,20 +22,20 @@ public interface NubemetWebService {
 	 * @param newNubemetTask The new Task	 
 	 * @return true on success, false else.
 	 */
-	public boolean addTask(NubemetTask newNubemetTask);
+	public boolean addTask(NubemetTask newNubemetTask, int userEid);
 	
 	/**
 	 * Returns a list of people who works for me.
 	 * @return a list of pairs <The employee EID , The Employees name>
 	 */
-	public HashMap<Integer, String> getWorksForMe();
+	public HashMap<Integer, String> getWorksForMe(int userEid);
 	
 	/**
 	 * Removes a task from the DB.
 	 * @param tid The task to remove id.
 	 * @return true upon success , false else.
 	 */
-	public boolean removeTask (int tid);
+	public boolean removeTask (int tid, int userEid);
 	
 	/**
 	 * Delegates a given task ID to the list of employees selected.
@@ -43,7 +43,7 @@ public interface NubemetWebService {
 	 * @param tid The task ID to delegate.
 	 * @return true upon success , false else.
 	 */
-	public boolean delegateTask(List<Integer> delegateTo, int tid);
+	public boolean delegateTask(List<Integer> delegateTo, int tid, int userEid);
 	
 	/**
 	 * Authenticate the logging user with the system. 
@@ -51,5 +51,5 @@ public interface NubemetWebService {
 	 * @param password The password.
 	 * @return true upon success , false else.
 	 */
-	public boolean authenticate(String userName , String password);
+	public int authenticate(String userName , String password);
 }

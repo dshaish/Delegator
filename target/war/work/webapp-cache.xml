@@ -11,6 +11,7 @@
           <string>WEB-INF/hibernate.cfg.xml</string>
           <string>WEB-INF/hibernate.properties</string>
           <string>WEB-INF/web.xml</string>
+          <string>WEB-INF/classes/applicationContext.xml</string>
           <string>WEB-INF/classes/DB_Build.sql</string>
           <string>WEB-INF/classes/org/delegator/api/NubemetDelegatedTo.class</string>
           <string>WEB-INF/classes/org/delegator/api/NubemetTask.class</string>
@@ -22,7 +23,6 @@
           <string>WEB-INF/classes/org/delegator/engine/LoggedUserBean.class</string>
           <string>WEB-INF/classes/org/delegator/engine/NubemetWebServiceImpl.class</string>
           <string>WEB-INF/classes/org/delegator/engine/TasksList.class</string>
-          <string>WEB-INF/classes/org/delegator/engine/UserTasksFilter$1.class</string>
           <string>WEB-INF/classes/org/delegator/engine/UserTasksFilter.class</string>
           <string>WEB-INF/classes/org/delegator/entities/Archived.class</string>
           <string>WEB-INF/classes/org/delegator/entities/Divisions.class</string>

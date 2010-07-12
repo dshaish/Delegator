@@ -28,9 +28,10 @@ class TasksList{
 	/**
 	 * Returns the tasks list according to the connected user and the filter type.
 	 * @param filter filter type for the list extraction from the DB.
+	 * @param userEid 
 	 * @return the list of tasks for the user.
 	 */
-	public List<NubemetTask> getTasks(UserTasksFilter filter) {
+	public List<NubemetTask> getTasks(UserTasksFilter filter, int userEid) {
 		// Initialize base parameters
 		MessageContext mc = wsContext. getMessageContext();
 		HttpSession session = ((javax.servlet.http.HttpServletRequest)mc.get(MessageContext.SERVLET_REQUEST)).getSession();
@@ -66,9 +67,10 @@ class TasksList{
 	 * Adds a new task to the user's list.
 	 * The delegation process is not done here!.
 	 * @param newNubemetTask The new Task	 
+	 * @param userEid 
 	 * @return true on success, false else.
 	 */
-	public boolean addTask(NubemetTask newNubemetTask){
+	public boolean addTask(NubemetTask newNubemetTask, int userEid){
 		MessageContext mc = wsContext. getMessageContext();
 		HttpSession session = ((javax.servlet.http.HttpServletRequest)mc.get(MessageContext.SERVLET_REQUEST)).getSession();
 		Session hybssn = HibernateUtils.getSessionFactory().getCurrentSession();
@@ -112,7 +114,7 @@ class TasksList{
 	 * Returns a list of people who works for me.
 	 * @return a list of pairs <The employee EID , The Employees name>
 	 */
-	public HashMap<Integer, String> getWorksForMe(){
+	public HashMap<Integer, String> getWorksForMe(int userEid){
 		MessageContext mc = wsContext. getMessageContext();
 		HttpSession session = ((javax.servlet.http.HttpServletRequest)mc.get(MessageContext.SERVLET_REQUEST)).getSession();
 		Session hybssn = HibernateUtils.getSessionFactory().getCurrentSession();
@@ -138,7 +140,7 @@ class TasksList{
 	 * @param tid The task to remove id.
 	 * @return true upon success , false else.
 	 */
-	public boolean removeTask (int tid){
+	public boolean removeTask (int tid, int userEid){
 		Session hybssn = HibernateUtils.getSessionFactory().getCurrentSession();
 		hybssn.beginTransaction();
 		
@@ -155,7 +157,7 @@ class TasksList{
 	 * @param tid The task ID to delegate.
 	 * @return true upon success , false else.
 	 */
-	public boolean delegateTask(List<Integer> delegateTo, int tid){
+	public boolean delegateTask(List<Integer> delegateTo, int tid, int userEid){
 		Session hybssn = HibernateUtils.getSessionFactory().getCurrentSession();
 		hybssn.beginTransaction();
 		
