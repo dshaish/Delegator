@@ -32,11 +32,12 @@ public class LoggedUserBean implements LoggedUser {
 	public int isRegistered(String username, String password) {
 		try {
 			Session session = HibernateUtils.getSessionFactory().getCurrentSession();
+			session.beginTransaction();
 			emp = (Employee)session
 					.createQuery(
-							"from Employee where username = :username and password = :password")
-					.setParameter("username", username)
-					.setParameter("password", Integer.valueOf(password))
+							"from Employee where userName = :u and password = :p")
+					.setParameter("u", username)
+					.setParameter("p", Integer.valueOf(password))
 					.uniqueResult();
 			if (emp != null) {
 				_userEid = emp.getEid();
