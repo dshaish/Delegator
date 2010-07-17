@@ -6,6 +6,7 @@ import java.util.List;
 import javax.jws.WebService;
 import org.delegator.api.NubemetTask;
 import org.delegator.api.NubemetWebService;
+import org.delegator.entities.Employee;
 
 @WebService(endpointInterface = "org.delegator.api.NubemetWebService")
 public class NubemetWebServiceImpl implements NubemetWebService {
@@ -28,7 +29,7 @@ public class NubemetWebServiceImpl implements NubemetWebService {
 	}
 
 	@Override
-	public HashMap<Integer, String> getWorksForMe(Long userEid) {
+	public List<Employee> getWorksForMe(Long userEid) {
 		return tasksList.getWorksForMe(userEid);
 	}
 

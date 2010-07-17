@@ -10,6 +10,7 @@ import org.delegator.api.NubemetTask;
 import org.delegator.entities.DoneBy;
 import org.delegator.entities.Employee;
 import org.delegator.entities.Tasks;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 class TasksList{
@@ -82,13 +83,14 @@ class TasksList{
 		newTask.seteDate(newNubemetTask.getEdate());
 		newTask.setDelegated(newNubemetTask.getDelegated());
 		newTask.setDelegated(newNubemetTask.getDelegated());
-		
+
 		DoneBy doneBy = new DoneBy();
 		doneBy.setEmployee(emp);
+		List<DoneBy> doneByList = new LinkedList<DoneBy>();
+		doneByList.add(doneBy);
+		newTask.setDoneBy(doneByList);
 		doneBy.setTask(newTask);
-		doneBy.setId(new Long(1));
 		
-		hybssn.save(doneBy);
 		hybssn.save(newTask);
 		hybssn.getTransaction().commit();
 		
@@ -99,22 +101,16 @@ class TasksList{
 	 * Returns a list of people who works for me.
 	 * @return a list of pairs <The employee EID , The Employees name>
 	 */
-	public HashMap<Integer, String> getWorksForMe(Long userEid){
+	@SuppressWarnings("unchecked")
+	public List<Employee> getWorksForMe(Long userEid){
 		Session hybssn = HibernateUtils.getSessionFactory().getCurrentSession();
 		if (hybssn == null)
 			throw new WebServiceException("No session in WebServiceContext");
 		
-		HashMap<Integer, String> ret = new HashMap<Integer, String>();
-		
-		Iterator<?> itr = hybssn.createQuery("from works_for where ManagerId = :userEid")
-							.setParameter("userEid",userEid)
-							.iterate();
-//		while (itr.hasNext()){
-//			itr.next();
-//			ret.put((((WorksFor)itr).getId()).getEid() , 
-//					((Employee)hybssn.load(Employee.class, (((WorksFor)itr).getId()).getEid())).getName());
-//		}
-		
+		List<Employee> ret = new LinkedList<Employee>();
+		Query itr = hybssn.createQuery("from employee where bossId = :userEid")
+							.setParameter("userEid",userEid);
+		ret = (List<Employee>)itr.list();					
 		return ret;	
 	}
 	
