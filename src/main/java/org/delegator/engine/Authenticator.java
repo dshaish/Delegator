@@ -8,9 +8,9 @@ public class Authenticator {
 	 * @param password The password.
 	 * @return true upon success , false else.
 	 */
-	public int authenticate(String userName , String password){
+	public Long authenticate(String userName , String password){
 		LoggedUserBean loggedUser = new LoggedUserBean();
-		int ueid = loggedUser.isRegistered(userName , password);
+		Long ueid = loggedUser.isRegistered(userName , password);
 		return ueid;
 	}
 }

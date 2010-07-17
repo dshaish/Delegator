@@ -2,29 +2,23 @@ package org.delegator.api;
 
 import java.util.Date;
 import java.util.List;
-import org.delegator.entities.Updates;
+//import org.delegator.entities.Updates;
 
 public class NubemetTask {
 	
-	private Integer tid;
+	private Long tid;
 	private Date cdate;
 	private Date edate;
-	private Date finishedDate;
 	private String title;
 	private String description;
-	private String attachment;
-	private String status;
-	private byte flagged;
 	private byte delegated;
 	private List<Integer> doneBy;
-	private Updates updates;
 	
-	
-	public Integer getTid() {
+	public Long getTid() {
 		return tid;
 	}
 	
-	public void setTid(Integer tid) {
+	public void setTid(Long tid) {
 		this.tid = tid;
 	}
 	public Date getCdate() {
@@ -39,12 +33,6 @@ public class NubemetTask {
 	public void setEdate(Date edate) {
 		this.edate = edate;
 	}
-	public Date getFinishedDate() {
-		return finishedDate;
-	}
-	public void setFinishedDate(Date finishedDate) {
-		this.finishedDate = finishedDate;
-	}
 	public String getTitle() {
 		return title;
 	}
@@ -57,24 +45,7 @@ public class NubemetTask {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getAttachment() {
-		return attachment;
-	}
-	public void setAttachment(String attachment) {
-		this.attachment = attachment;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	public byte getFlagged() {
-		return flagged;
-	}
-	public void setFlagged(byte flagged) {
-		this.flagged = flagged;
-	}
+	
 	public byte getDelegated() {
 		return delegated;
 	}
@@ -87,10 +58,5 @@ public class NubemetTask {
 	public void setDoneBy(List<Integer> doneBy) {
 		this.doneBy = doneBy;
 	}
-	public Updates getUpdates() {
-		return updates;
-	}
-	public void setUpdates(Updates updates) {
-		this.updates = updates;
-	}
+
 }

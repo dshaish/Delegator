@@ -13,7 +13,8 @@ public enum UserTasksFilter {
 		case ACTIVE:
 			return "SELECT tasks from Tasks as tasks ,DoneBy as doneBy WHERE tasks.tid = doneBy.id.tid and doneBy.id.eid = :userEid and tasks.status = 'Active'";
 		case ALL:
-			return "SELECT tasks from Tasks as tasks ,DoneBy as doneBy WHERE tasks.tid = doneBy.id.tid and doneBy.id.eid = :userEid";
+			return "SELECT d.task from DoneBy d where d.employee.eid = :userEid";
+			//return "SELECT tasks from Tasks as tasks ,DoneBy as doneBy WHERE tasks.tid = doneBy.id.tid and doneBy.id.eid = :userEid";
 		case FLAGGED:
 			return "SELECT tasks from Tasks as tasks ,DoneBy as doneBy WHERE tasks.tid = doneBy.id.tid and doneBy.id.eid = :userEid and tasks.flagged = 1";		
 		case SUSPENDED:

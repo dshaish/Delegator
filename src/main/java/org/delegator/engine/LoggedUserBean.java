@@ -7,7 +7,7 @@ import org.hibernate.Session;
 
 public class LoggedUserBean implements LoggedUser {
 
-	private int _userEid;
+	private Long _userEid;
 	private Employee emp;
 
 	public LoggedUserBean() {
@@ -21,15 +21,15 @@ public class LoggedUserBean implements LoggedUser {
 		this.emp = emp;
 	}
 
-	public int get_UserEid() {
+	public Long get_UserEid() {
 		return _userEid;
 	}
 
-	public void set_UserEid(int userEid) {
+	public void set_UserEid(Long userEid) {
 		_userEid = userEid;
 	}
 
-	public int isRegistered(String username, String password) {
+	public Long isRegistered(String username, String password) {
 		try {
 			Session session = HibernateUtils.getSessionFactory().getCurrentSession();
 			session.beginTransaction();
@@ -40,12 +40,13 @@ public class LoggedUserBean implements LoggedUser {
 					.setParameter("p", Integer.valueOf(password))
 					.uniqueResult();
 			if (emp != null) {
-				_userEid = emp.getEid();
+				_userEid =  emp.getEid();
 				return _userEid;
 			}
 		} catch (NoResultException ex) {
-			return -1;
+			return -1L;
 		}
-		return -1;
+		return -1L;
 	}
+
 }

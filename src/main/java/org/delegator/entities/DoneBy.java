@@ -1,75 +1,61 @@
 package org.delegator.entities;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
+import java.io.Serializable;
+
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+
+
 @Entity
-@Table(name = "done_by", catalog = "delegator")
-public class DoneBy implements java.io.Serializable {
+//@Table(name = "employee", catalog = "dtemp")
+@Table(name = "done_By")
+public class DoneBy implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private DoneById id;
-	private Tasks tasks;
+	
+	private Long id;
+	private Tasks task;
 	private Employee employee;
-	private byte changed;
-
-	public DoneBy() {
+	
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(nullable = false)
+	public Long getId() {
+		return id;
 	}
 
-	public DoneBy(DoneById id, Tasks tasks, Employee employee, byte changed) {
-		this.id = id;
-		this.tasks = tasks;
-		this.employee = employee;
-		this.changed = changed;
-	}
-
-	@EmbeddedId
-	@AttributeOverrides( {
-			@AttributeOverride(name = "tid", column = @Column(name = "Tid", nullable = false)),
-			@AttributeOverride(name = "eid", column = @Column(name = "Eid", nullable = false)) })
-	public DoneById getId() {
-		return this.id;
-	}
-
-	public void setId(DoneById id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Tid", nullable = false, insertable = false, updatable = false)
-	public Tasks getTasks() {
-		return this.tasks;
+	@ManyToOne
+	@JoinColumn(name="Tid",insertable=false,updatable=false)
+	public Tasks getTask() {
+		return task;
 	}
 
-	public void setTasks(Tasks tasks) {
-		this.tasks = tasks;
+	public void setTask(Tasks task) {
+		this.task = task;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Eid", nullable = false, insertable = false, updatable = false)
+	@ManyToOne
+	@JoinColumn(name="Eid",insertable=false,updatable=false)
 	public Employee getEmployee() {
-		return this.employee;
+		return employee;
 	}
 
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
-
-	@Column(name = "Changed", nullable = false)
-	public byte getChanged() {
-		return this.changed;
-	}
-
-	public void setChanged(byte changed) {
-		this.changed = changed;
-	}
-
+	
+	
 }

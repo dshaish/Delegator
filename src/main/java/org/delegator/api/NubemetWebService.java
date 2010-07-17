@@ -2,9 +2,8 @@ package org.delegator.api;
 
 import java.util.HashMap;
 import java.util.List;
-import javax.jws.WebService;
 
-import org.delegator.engine.UserTasksFilter;
+import javax.jws.WebService;
 
 @WebService
 public interface NubemetWebService {
@@ -14,7 +13,7 @@ public interface NubemetWebService {
 	 * @param filter filter type for the list extraction from the DB.
 	 * @return the list of tasks for the user.
 	 */
-	public List<NubemetTask> getTasks(UserTasksFilter filter, int userEid);
+	public List<NubemetTask> getTasks(Long userEid);
 	
 	/**
 	 * Adds a new task to the user's list.
@@ -22,20 +21,20 @@ public interface NubemetWebService {
 	 * @param newNubemetTask The new Task	 
 	 * @return true on success, false else.
 	 */
-	public boolean addTask(NubemetTask newNubemetTask, int userEid);
+	public boolean addTask(NubemetTask newNubemetTask, Long userEid);
 	
 	/**
 	 * Returns a list of people who works for me.
 	 * @return a list of pairs <The employee EID , The Employees name>
 	 */
-	public HashMap<Integer, String> getWorksForMe(int userEid);
+	public HashMap<Integer, String> getWorksForMe(Long userEid);
 	
 	/**
 	 * Removes a task from the DB.
 	 * @param tid The task to remove id.
 	 * @return true upon success , false else.
 	 */
-	public boolean removeTask (int tid, int userEid);
+	public boolean removeTask (Long tid, Long userEid);
 	
 	/**
 	 * Delegates a given task ID to the list of employees selected.
@@ -43,7 +42,7 @@ public interface NubemetWebService {
 	 * @param tid The task ID to delegate.
 	 * @return true upon success , false else.
 	 */
-	public boolean delegateTask(List<Integer> delegateTo, int tid, int userEid);
+	public boolean delegateTask(List<Long> delegateTo, Long tid, Long userEid);
 	
 	/**
 	 * Authenticate the logging user with the system. 
@@ -51,5 +50,5 @@ public interface NubemetWebService {
 	 * @param password The password.
 	 * @return true upon success , false else.
 	 */
-	public int authenticate(String userName , String password);
+	public Long authenticate(String userName , String password);
 }

@@ -3,14 +3,27 @@
 		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
 		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory name="NubemetSessionFactry">
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.password">root</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/delegator</property>
-        <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.default_catalog">delegator</property>
-        <property name="hibernate.default_schema">delegator</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
-        <property name="current_session_context_class"> thread </property>
-    </session-factory>
+	<session-factory name="NubemetSessionFactry">
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.password">root</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/dtemp</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.default_catalog">dtemp</property>
+		<!-- <property name="hibernate.default_schema">dtemp</property>-->
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+		<property name="current_session_context_class"> thread </property>
+		<mapping package="org.delegator.entities" />
+		<!-- <mapping class="org.delegator.entities.Archived"/> -->
+		<!--  <mapping class="org.delegator.entities.Divisions"/>-->
+		<mapping class="org.delegator.entities.DoneBy" />
+		<!--    <mapping class="org.delegator.entities.DoneById"/>-->
+		<mapping class="org.delegator.entities.Employee" />
+		<!--   <mapping class="org.delegator.entities.Late"/>-->
+		<!--   <mapping class="org.delegator.entities.OnTime"/>-->
+		<mapping class="org.delegator.entities.Tasks" />
+		<!--    <mapping class="org.delegator.entities.TasksC"/>-->
+		<!--   <mapping class="org.delegator.entities.Updates"/>-->
+		<!--    <mapping class="org.delegator.entities.WorksFor"/>-->
+		<!--   <mapping class="org.delegator.entities.WorksForId"/>-->
+	</session-factory>
 </hibernate-configuration>
