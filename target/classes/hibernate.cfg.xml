@@ -6,10 +6,10 @@
 	<session-factory name="NubemetSessionFactry">
 		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
 		<property name="hibernate.connection.password">root</property>
-		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/dtemp</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/Delegator</property>
 		<property name="hibernate.connection.username">root</property>
-		<property name="hibernate.default_catalog">dtemp</property>
-		<!-- <property name="hibernate.default_schema">dtemp</property>-->
+		<property name="hibernate.default_catalog">delegator</property>
+		<!-- <property name="hibernate.default_schema">delegator</property>-->
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
 		<property name="current_session_context_class"> thread </property>
 		<mapping package="org.delegator.entities" />

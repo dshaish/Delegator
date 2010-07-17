@@ -1,0 +1,96 @@
+package org.delegator.entities;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
+@Entity
+@Table(name = "tasks_c", catalog = "delegator")
+public class TasksC implements java.io.Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+	private int tid;
+	private Tasks tasksByTid;
+	private Tasks tasksByParentTaskId;
+	private Tasks tasksByRootTaskId;
+	private Integer parallel;
+
+	public TasksC() {
+	}
+
+	public TasksC(Tasks tasksByTid, Tasks tasksByParentTaskId,
+			Tasks tasksByRootTaskId) {
+		this.tasksByTid = tasksByTid;
+		this.tasksByParentTaskId = tasksByParentTaskId;
+		this.tasksByRootTaskId = tasksByRootTaskId;
+	}
+
+	public TasksC(Tasks tasksByTid, Tasks tasksByParentTaskId,
+			Tasks tasksByRootTaskId, Integer parallel) {
+		this.tasksByTid = tasksByTid;
+		this.tasksByParentTaskId = tasksByParentTaskId;
+		this.tasksByRootTaskId = tasksByRootTaskId;
+		this.parallel = parallel;
+	}
+
+	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "tasksByTid"))
+	@Id
+	@GeneratedValue(generator = "generator")
+	@Column(name = "Tid", unique = true, nullable = false)
+	public int getTid() {
+		return this.tid;
+	}
+
+	public void setTid(int tid) {
+		this.tid = tid;
+	}
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@PrimaryKeyJoinColumn
+	public Tasks getTasksByTid() {
+		return this.tasksByTid;
+	}
+
+	public void setTasksByTid(Tasks tasksByTid) {
+		this.tasksByTid = tasksByTid;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ParentTaskId", nullable = false)
+	public Tasks getTasksByParentTaskId() {
+		return this.tasksByParentTaskId;
+	}
+
+	public void setTasksByParentTaskId(Tasks tasksByParentTaskId) {
+		this.tasksByParentTaskId = tasksByParentTaskId;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "RootTaskId", nullable = false)
+	public Tasks getTasksByRootTaskId() {
+		return this.tasksByRootTaskId;
+	}
+
+	public void setTasksByRootTaskId(Tasks tasksByRootTaskId) {
+		this.tasksByRootTaskId = tasksByRootTaskId;
+	}
+
+	@Column(name = "Parallel")
+	public Integer getParallel() {
+		return this.parallel;
+	}
+
+	public void setParallel(Integer parallel) {
+		this.parallel = parallel;
+	}
+
+}

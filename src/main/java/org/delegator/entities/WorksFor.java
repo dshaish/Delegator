@@ -6,15 +6,14 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "works_for", catalog = "dtemp")
+//@Table(name = "works_for", catalog = "dtemp")
+@Table(name = "works_for")
 public class WorksFor implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
 	private Employee manager;
 	private Employee employee;
-	
-	
 	
 	public WorksFor() {
 	}

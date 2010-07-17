@@ -14,7 +14,6 @@ import javax.persistence.Table;
 
 
 @Entity
-//@Table(name = "employee", catalog = "dtemp")
 @Table(name = "done_By")
 public class DoneBy implements Serializable{
 

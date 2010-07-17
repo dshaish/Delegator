@@ -17,7 +17,6 @@ import javax.persistence.Table;
 
 
 @Entity
-//@Table(name = "tasks", catalog = "dtemp")
 @Table(name = "tasks")
 public class Tasks implements Serializable {
 	
@@ -56,7 +55,11 @@ public class Tasks implements Serializable {
 
 
 	public void setcDate(Date cDate) {
-		this.cDate = cDate;
+		if (cDate == null){
+			this.cDate = new Date();
+		} else {
+			this.cDate = cDate;
+		}
 	}
 
 	@Column(name = "EDate", nullable = true)

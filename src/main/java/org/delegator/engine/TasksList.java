@@ -1,22 +1,18 @@
 package org.delegator.engine;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.annotation.Resource;
-import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.WebServiceException;
-
 import org.delegator.api.NubemetTask;
+import org.delegator.entities.DoneBy;
 import org.delegator.entities.Employee;
 import org.delegator.entities.Tasks;
 import org.hibernate.Session;
 
 class TasksList{
-	@Resource
-	private WebServiceContext wsContext;
 	
 	public TasksList() {
 	}
@@ -27,31 +23,35 @@ class TasksList{
 	 * @param userEid 
 	 * @return the list of tasks for the user.
 	 */
+	@SuppressWarnings("unchecked")
 	public List<NubemetTask> getTasks(Long userEid) {
 		// Initialize base parameters
 		Session hybssn = HibernateUtils.getSessionFactory().getCurrentSession();
 		if (hybssn == null)
 			throw new WebServiceException("No session in WebServiceContext");
+		hybssn.beginTransaction();
+		
 		List<NubemetTask> tasksList = new LinkedList<NubemetTask>();
+		
 		// Run the query:
-		//Iterator<?> results= hybssn.createQuery(UserTasksFilter.getFilter(UserTasksFilter.ALL))
-		//					.setParameter("userEid", userEid).iterate();
+		Iterator<Tasks> results= (hybssn.createQuery(UserTasksFilter.getFilter(UserTasksFilter.ALL))
+													.setParameter("userEid", userEid).list()).iterator();
 		
-		List<Tasks> results= hybssn.createQuery(UserTasksFilter.getFilter(UserTasksFilter.ALL))
-		.setParameter("userEid", userEid).list();
+		// Convert To API object
+		while(results.hasNext()) {
+			// Convert from Tasks entity to NubemetTask.
+			Tasks curTask = (Tasks)results.next();
+			NubemetTask curNubemetTask = new NubemetTask();
+			curNubemetTask.setTitle(curTask.getTitle());
+			curNubemetTask.setDescription(curTask.getDescription());
+			curNubemetTask.setTid(curTask.getTid());
+			curNubemetTask.setCdate(curTask.getcDate());
+			curNubemetTask.setEdate(curTask.geteDate());
+			curNubemetTask.setDelegated(curTask.getDelegated());
+			tasksList.add(curNubemetTask);
+		}
 		
-//		while(results.hasNext()) {
-//			// Convert from Tasks entity to NubemetTask.
-//			Tasks curTask = (Tasks)results.next();
-//			NubemetTask curNubemetTask = new NubemetTask();
-//			curNubemetTask.setTitle(curTask.getTitle());
-//			curNubemetTask.setDescription(curTask.getDescription());
-//			curNubemetTask.setTid(curTask.getTid());
-//			curNubemetTask.setCdate(curTask.getcDate());
-//			curNubemetTask.setEdate(curTask.geteDate());
-//			curNubemetTask.setDelegated(curTask.getDelegated());
-//			tasksList.add(curNubemetTask);
-//		}
+		hybssn.getTransaction().commit();
 		return tasksList;
 	}
 	
@@ -65,28 +65,31 @@ class TasksList{
 	public boolean addTask(NubemetTask newNubemetTask, Long userEid){
 
 		Session hybssn = HibernateUtils.getSessionFactory().getCurrentSession();
-
+		hybssn.beginTransaction();
 		Employee emp = (Employee)hybssn
 							.createQuery("from Employee where Eid = :userEid")
 							.setParameter("userEid", userEid)
 							.uniqueResult();
 		
-		hybssn.beginTransaction();
+		
+		
 		Tasks newTask = new Tasks();
 		newTask.setTitle(newNubemetTask.getTitle());
 		newTask.setDescription(newNubemetTask.getDescription());
 		newTask.setTid(newNubemetTask.getTid());
 		newTask.setcDate(newNubemetTask.getCdate());
+		newTask.setCreator(emp);
 		newTask.seteDate(newNubemetTask.getEdate());
 		newTask.setDelegated(newNubemetTask.getDelegated());
 		newTask.setDelegated(newNubemetTask.getDelegated());
-				
-		//DoneById doneById = new DoneById(newTask.getTid(), emp.getEid());
-	//	DoneBy doneBy = new DoneBy(doneById, newTask, emp , (byte) 0);
-
-	//	hybssn.save(doneBy);
-		hybssn.save(newTask);
 		
+		DoneBy doneBy = new DoneBy();
+		doneBy.setEmployee(emp);
+		doneBy.setTask(newTask);
+		doneBy.setId(new Long(1));
+		
+		hybssn.save(doneBy);
+		hybssn.save(newTask);
 		hybssn.getTransaction().commit();
 		
 		return true;

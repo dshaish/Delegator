@@ -40,8 +40,7 @@ public class LoggedUserBean implements LoggedUser {
 					.setParameter("p", Integer.valueOf(password))
 					.uniqueResult();
 			if (emp != null) {
-				_userEid =  emp.getEid();
-				return _userEid;
+				return  emp.getEid();
 			}
 		} catch (NoResultException ex) {
 			return -1L;
