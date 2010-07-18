@@ -1,8 +1,6 @@
 package org.delegator.api;
 
 import java.util.Date;
-import java.util.List;
-//import org.delegator.entities.Updates;
 
 public class NubemetTask {
 	
@@ -12,7 +10,7 @@ public class NubemetTask {
 	private String title;
 	private String description;
 	private byte delegated;
-	private List<Integer> doneBy;
+	private String doneBy;
 	
 	public Long getTid() {
 		return tid;
@@ -52,10 +50,10 @@ public class NubemetTask {
 	public void setDelegated(byte delegated) {
 		this.delegated = delegated;
 	}
-	public List<Integer> getDoneBy() {
+	public String getDoneBy() {
 		return doneBy;
 	}
-	public void setDoneBy(List<Integer> doneBy) {
+	public void setDoneBy(String doneBy) {
 		this.doneBy = doneBy;
 	}
 

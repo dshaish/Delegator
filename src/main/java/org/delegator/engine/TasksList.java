@@ -83,6 +83,13 @@ class TasksList{
 		newTask.setDelegated(newNubemetTask.getDelegated());
 
 		// Linking with Done BY:
+		List<DoneBy> doneB = new LinkedList<DoneBy>();
+		String[] db = newNubemetTask.getDoneBy().split(" ");
+		for (String s : db){
+			DoneBy doneBy = new DoneBy();
+			doneBy.setEmployee(emp);
+			doneBy.setTask(newTask);
+		}
 		DoneBy doneBy = new DoneBy();
 		doneBy.setEmployee(emp);
 		doneBy.setTask(newTask);

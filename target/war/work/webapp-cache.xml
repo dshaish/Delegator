@@ -16,6 +16,7 @@
           <string>WEB-INF/classes/hibernate.cfg.xml</string>
           <string>WEB-INF/classes/hibernate.properties</string>
           <string>WEB-INF/classes/org/delegator/api/NubemetDelegatedTo.class</string>
+          <string>WEB-INF/classes/org/delegator/api/NubemetEmployee.class</string>
           <string>WEB-INF/classes/org/delegator/api/NubemetTask.class</string>
           <string>WEB-INF/classes/org/delegator/api/NubemetWebService.class</string>
           <string>WEB-INF/classes/org/delegator/api/NubemetWorksForList.class</string>
