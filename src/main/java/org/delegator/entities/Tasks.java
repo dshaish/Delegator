@@ -2,6 +2,7 @@ package org.delegator.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -37,6 +38,9 @@ public class Tasks implements Serializable {
 	}
 	
 	public void addToDoneBy(DoneBy newDoneBy){
+		if (doneBy == null){
+			doneBy = new LinkedList<DoneBy>();
+		}
 		doneBy.add(newDoneBy);
 	}
 

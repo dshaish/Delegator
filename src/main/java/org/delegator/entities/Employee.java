@@ -1,6 +1,7 @@
 package org.delegator.entities;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -31,6 +32,9 @@ public class Employee implements Serializable {
 	private List<Employee> employee;
 	
 	public void addToDoneBy(DoneBy newDoneBy){
+		if (doneBy == null){
+			doneBy = new LinkedList<DoneBy>();
+		}
 		doneBy.add(newDoneBy);
 	}
 	

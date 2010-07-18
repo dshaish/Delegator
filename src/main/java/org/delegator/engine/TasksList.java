@@ -107,11 +107,13 @@ class TasksList{
 		Session hybssn = HibernateUtils.getSessionFactory().getCurrentSession();
 		if (hybssn == null)
 			throw new WebServiceException("No session in WebServiceContext");
+		hybssn.beginTransaction();
 		
 		List<Employee> ret = new LinkedList<Employee>();
-		Query itr = hybssn.createQuery("from employee where bossId = :userEid")
-							.setParameter("userEid",userEid);
+		Query itr = (hybssn.createQuery("SELECT e from Employee as e where e.boss = :userEid").setParameter("userEid",userEid));
 		ret = (List<Employee>)itr.list();					
+		
+		hybssn.getTransaction().commit();
 		return ret;	
 	}
 	
