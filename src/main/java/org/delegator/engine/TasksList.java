@@ -4,11 +4,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import javax.xml.ws.WebServiceException;
+
+import org.delegator.api.NubemetEmployee;
 import org.delegator.api.NubemetTask;
 import org.delegator.entities.DoneBy;
 import org.delegator.entities.Employee;
 import org.delegator.entities.Tasks;
-import org.hibernate.Query;
 import org.hibernate.Session;
 
 class TasksList{
@@ -103,16 +104,22 @@ class TasksList{
 	 * @return a list of pairs <The employee EID , The Employees name>
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Employee> getWorksForMe(Long userEid){
+	public List<NubemetEmployee> getWorksForMe(Long userEid){
 		Session hybssn = HibernateUtils.getSessionFactory().getCurrentSession();
 		if (hybssn == null)
 			throw new WebServiceException("No session in WebServiceContext");
 		hybssn.beginTransaction();
 		
-		List<Employee> ret = new LinkedList<Employee>();
-		Query itr = (hybssn.createQuery("SELECT e from Employee as e where e.boss = :userEid").setParameter("userEid",userEid));
-		ret = (List<Employee>)itr.list();					
-		
+		List<NubemetEmployee> ret = new LinkedList<NubemetEmployee>();
+		Iterator<Employee> itr = (hybssn.createQuery("SELECT emp from Employee as emp where bossID = :userEid").setParameter("userEid",userEid)).iterate();
+		while (itr.hasNext()){
+			NubemetEmployee nbe = new NubemetEmployee();
+			Employee emp = itr.next();
+			nbe.setName(emp.getUserName());
+			nbe.setEid(emp.getEid());
+			ret.add(nbe);
+		}
+			
 		hybssn.getTransaction().commit();
 		return ret;	
 	}

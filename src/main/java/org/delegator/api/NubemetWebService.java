@@ -2,7 +2,6 @@ package org.delegator.api;
 
 import java.util.List;
 import javax.jws.WebService;
-import org.delegator.entities.Employee;
 
 @WebService
 public interface NubemetWebService {
@@ -26,7 +25,7 @@ public interface NubemetWebService {
 	 * Returns a list of people who works for me.
 	 * @return a list of pairs <The employee EID , The Employees name>
 	 */
-	public List<Employee> getWorksForMe(Long userEid);
+	public List<NubemetEmployee> getWorksForMe(Long userEid);
 	
 	/**
 	 * Removes a task from the DB.
