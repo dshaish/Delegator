@@ -1,1 +1,4 @@
 
+*.class
+*.jar
+*.cfg.xml
