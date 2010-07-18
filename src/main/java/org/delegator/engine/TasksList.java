@@ -1,7 +1,5 @@
 package org.delegator.engine;
 
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -51,7 +49,7 @@ class TasksList{
 			curNubemetTask.setDelegated(curTask.getDelegated());
 			tasksList.add(curNubemetTask);
 		}
-		
+	
 		hybssn.getTransaction().commit();
 		return tasksList;
 	}
@@ -64,7 +62,6 @@ class TasksList{
 	 * @return true on success, false else.
 	 */
 	public boolean addTask(NubemetTask newNubemetTask, Long userEid){
-
 		Session hybssn = HibernateUtils.getSessionFactory().getCurrentSession();
 		hybssn.beginTransaction();
 		Employee emp = (Employee)hybssn
@@ -73,7 +70,7 @@ class TasksList{
 							.uniqueResult();
 		
 		
-		
+		// Converting Nubemet task to Task:
 		Tasks newTask = new Tasks();
 		newTask.setTitle(newNubemetTask.getTitle());
 		newTask.setDescription(newNubemetTask.getDescription());
@@ -84,14 +81,18 @@ class TasksList{
 		newTask.setDelegated(newNubemetTask.getDelegated());
 		newTask.setDelegated(newNubemetTask.getDelegated());
 
+		// Linking with Done BY:
 		DoneBy doneBy = new DoneBy();
 		doneBy.setEmployee(emp);
-		List<DoneBy> doneByList = new LinkedList<DoneBy>();
-		doneByList.add(doneBy);
-		newTask.setDoneBy(doneByList);
 		doneBy.setTask(newTask);
 		
+		// Adding a Done By record:
+		newTask.addToDoneBy(doneBy);
+		emp.addToDoneBy(doneBy);
+		
+		// save and commit changed objects
 		hybssn.save(newTask);
+		hybssn.save(emp);
 		hybssn.getTransaction().commit();
 		
 		return true;
@@ -123,8 +124,8 @@ class TasksList{
 		Session hybssn = HibernateUtils.getSessionFactory().getCurrentSession();
 		hybssn.beginTransaction();
 		
-		//Tasks task2remove = (Tasks)hybssn.load(Tasks.class, tid);
-		//hybssn.delete(task2remove);
+		Tasks task2remove = (Tasks)hybssn.load(Tasks.class, tid);
+		hybssn.delete(task2remove);
 		
 		hybssn.getTransaction().commit();
 		return true;
@@ -137,25 +138,19 @@ class TasksList{
 	 * @return true upon success , false else.
 	 */
 	public boolean delegateTask(List<Long> delegateTo, Long tid, Long userEid){
-//		Session hybssn = HibernateUtils.getSessionFactory().getCurrentSession();
-//		hybssn.beginTransaction();
-//		
-//		Tasks task2Delegate = (Tasks)hybssn.load(Tasks.class, tid);
-//		for (Integer delg2: delegateTo){
-//			DoneBy doneBy = new DoneBy();
-//			Employee emp = (Employee)hybssn.load(Employee.class, delg2);
-//			DoneById doneById = new DoneById();
-//			
-//			doneById.setEid(emp.getEid());
-//			doneById.setTid(tid);
-//			doneBy.setEmployee(emp);
-//			doneBy.setTasks(task2Delegate);
-//			doneBy.setId(doneById);
-//			doneBy.setChanged((byte) 1);
-//		}
-//		
-//		hybssn.getTransaction().commit();
-//		
+		Session hybssn = HibernateUtils.getSessionFactory().getCurrentSession();
+		hybssn.beginTransaction();
+		
+		Tasks task2Delegate = (Tasks)hybssn.load(Tasks.class, tid);
+		for (Long delg2: delegateTo){
+			DoneBy doneBy = new DoneBy();
+			Employee emp = (Employee)hybssn.load(Employee.class, delg2);
+			
+			doneBy.setEmployee(emp);
+			doneBy.setTask(task2Delegate);
+		}
+		
+		hybssn.getTransaction().commit();
 		return true;
 	}
 }

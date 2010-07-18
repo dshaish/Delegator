@@ -1,8 +1,6 @@
 package org.delegator.engine;
 
-import java.util.HashMap;
 import java.util.List;
-
 import javax.jws.WebService;
 import org.delegator.api.NubemetTask;
 import org.delegator.api.NubemetWebService;

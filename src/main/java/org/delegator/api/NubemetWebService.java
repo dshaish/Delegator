@@ -1,10 +1,7 @@
 package org.delegator.api;
 
-import java.util.HashMap;
 import java.util.List;
-
 import javax.jws.WebService;
-
 import org.delegator.entities.Employee;
 
 @WebService

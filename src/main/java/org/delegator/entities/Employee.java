@@ -30,6 +30,10 @@ public class Employee implements Serializable {
 	private Employee boss;
 	private List<Employee> employee;
 	
+	public void addToDoneBy(DoneBy newDoneBy){
+		doneBy.add(newDoneBy);
+	}
+	
 	@Id
 	@Column(name = "Eid", nullable = false)
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -39,31 +43,39 @@ public class Employee implements Serializable {
 	public void setEid(Long eid) {
 		this.eid = eid;
 	}
+	
 	@Column(name = "UserName", nullable = false)
 	public String getUserName() {
 		return userName;
 	}
+	
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	
 	@Column(name = "Name", nullable = false)
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	@Column(name = "LName", nullable = false)
 	public String getLname() {
 		return lname;
 	}
+	
 	public void setLname(String lname) {
 		this.lname = lname;
 	}
+	
 	@Column(name = "Password", nullable = false)
 	public Integer getPassword() {
 		return password;
 	}
+	
 	public void setPassword(Integer password) {
 		this.password = password;
 	}
@@ -73,6 +85,7 @@ public class Employee implements Serializable {
 	public List<DoneBy> getDoneBy() {
 		return doneBy;
 	}
+	
 	public void setDoneBy(List<DoneBy> doneBy) {
 		this.doneBy = doneBy;
 	}

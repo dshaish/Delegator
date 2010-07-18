@@ -35,6 +35,10 @@ public class Tasks implements Serializable {
 	public Tasks() {
 		
 	}
+	
+	public void addToDoneBy(DoneBy newDoneBy){
+		doneBy.add(newDoneBy);
+	}
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
