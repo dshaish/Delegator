@@ -65,12 +65,13 @@ class TasksList{
 	public boolean addTask(NubemetTask newNubemetTask, Long userEid){
 		Session hybssn = HibernateUtils.getSessionFactory().getCurrentSession();
 		hybssn.beginTransaction();
+		
+		// Get creator employee
 		Employee emp = (Employee)hybssn
 							.createQuery("from Employee where Eid = :userEid")
 							.setParameter("userEid", userEid)
 							.uniqueResult();
-		
-		
+			
 		// Converting Nubemet task to Task:
 		Tasks newTask = new Tasks();
 		newTask.setTitle(newNubemetTask.getTitle());
@@ -80,27 +81,36 @@ class TasksList{
 		newTask.setCreator(emp);
 		newTask.seteDate(newNubemetTask.getEdate());
 		newTask.setDelegated(newNubemetTask.getDelegated());
-		newTask.setDelegated(newNubemetTask.getDelegated());
 
 		// Linking with Done BY:
-		List<DoneBy> doneB = new LinkedList<DoneBy>();
 		String[] db = newNubemetTask.getDoneBy().split(" ");
 		for (String s : db){
 			DoneBy doneBy = new DoneBy();
-			doneBy.setEmployee(emp);
+			Employee doerEmp = (Employee)hybssn
+							.createQuery("from Employee where Eid = :userEid")
+							.setParameter("userEid", Long.valueOf(s))
+							.uniqueResult();
+			doneBy.setEmployee(doerEmp);
 			doneBy.setTask(newTask);
+			
+			// Adding a Done By record:
+			newTask.addToDoneBy(doneBy);
+			doerEmp.addToDoneBy(doneBy);
+			
+			// Add the task to the employee
+			hybssn.save(doerEmp);
 		}
-		DoneBy doneBy = new DoneBy();
-		doneBy.setEmployee(emp);
-		doneBy.setTask(newTask);
 		
-		// Adding a Done By record:
-		newTask.addToDoneBy(doneBy);
-		emp.addToDoneBy(doneBy);
+		// Add to himself
+		DoneBy doneBy4Me = new DoneBy();
+		doneBy4Me.setEmployee(emp);
+		doneBy4Me.setTask(newTask);
+		newTask.addToDoneBy(doneBy4Me);
+		emp.addToDoneBy(doneBy4Me);
 		
 		// save and commit changed objects
-		hybssn.save(newTask);
 		hybssn.save(emp);
+		hybssn.save(newTask);
 		hybssn.getTransaction().commit();
 		
 		return true;
